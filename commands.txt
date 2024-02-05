@@ -1,8 +1,10 @@
 Create a virtual env
 python -m venv fastapienv
+python3 -m venv fastapienv (Mac)
 
 Activate the virtual env
 fastapienv\Scripts\activate.bat
+source fastapienv/bin/activate (Mac)
 
 check the install packages withing the virtual env
 pip list
