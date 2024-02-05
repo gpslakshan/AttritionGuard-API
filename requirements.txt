@@ -5,3 +5,5 @@ shap
 pandas
 numpy
 scikit-learn
+imblearn
+pyarrow
