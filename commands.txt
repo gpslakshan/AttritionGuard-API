@@ -1,0 +1,23 @@
+Create a virtual env
+python -m venv fastapienv
+
+Activate the virtual env
+fastapienv\Scripts\activate.bat
+
+check the install packages withing the virtual env
+pip list
+
+install fastapi within the virtual env
+pip install fastapi
+
+install uvicorn which is the web server for fastapi application
+pip install "uvicorn[standard]"
+
+install packages in requirements.txt
+pip install -r requirements.txt
+
+deactivate virtual env
+deactivate
+
+run the fastapi project
+uvicorn main:app --reload
