@@ -29,8 +29,8 @@ def predict_attrition(employee: Employee):
 
     return {
         "employee_details": employee,
-        "attrition_probability": f"{prediction_result}",
-        "attrition": "Yes" if prediction_result > 0.5 else "No"
+        "attrition_probability": f"{np.round(prediction_result.item(), 2)}",
+        "attrition_result": "Yes" if prediction_result > 0.5 else "No"
     }
 
 
@@ -59,13 +59,13 @@ def get_feature_importance(shap_values):
 
 def prepare_input_data(employee):
     input_data = {
-        "satisfaction_level": [employee.satisfaction_level],
-        "last_evaluation": [employee.last_evaluation],
-        "number_project": [employee.number_project],
-        "average_montly_hours": [employee.average_montly_hours],
+        "satisfaction_level": [round(employee.job_satisfaction / 100, 2)],
+        "last_evaluation": [round(employee.last_evaluation / 100, 2)],
+        "number_project": [employee.no_of_projects],
+        "average_montly_hours": [employee.avg_monthly_hours],
         "time_spend_company": [employee.time_spend_company],
-        "Work_accident": [employee.Work_accident],
-        "promotion_last_5years": [employee.promotion_last_5years],
+        "Work_accident": [employee.work_accidents],
+        "promotion_last_5years": [employee.promotions],
         "department": [employee.department],
         "salary_level": [employee.salary_level]
     }
