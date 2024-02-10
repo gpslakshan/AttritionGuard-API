@@ -6,10 +6,15 @@ from interpreter import explain_prediction
 from predictor import load_model, make_prediction
 from employee import Employee
 
-app = FastAPI()
+app = FastAPI(
+    title="AttritionGuard-API",
+    description="AttritionGuard-API is a powerful tool designed to help organizations proactively manage employee "
+                "attrition. With two intuitive endpoints, this API enables users to predict attrition and gain "
+                "valuable insights into the contributing factors.",
+)
 
 
-@app.post("/predict-attrition")
+@app.post("/predict-attrition", tags=["Prediction"])
 def predict_attrition(employee: Employee):
     # Loading the ANN
     model = load_model("BestModel.h5")
@@ -29,7 +34,7 @@ def predict_attrition(employee: Employee):
     }
 
 
-@app.post("/interpret-factors")
+@app.post("/interpret-factors", tags=["Interpretation"])
 def interpret_factors(employee: Employee):
     model = load_model("BestModel.h5")
     scaler, X_train, X_test, y_train, y_test = preprocess()
