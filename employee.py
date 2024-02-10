@@ -14,12 +14,22 @@ class Employee(BaseModel):
     job_satisfaction: float
     last_evaluation: float
 
-    # satisfaction_level: float
-    # last_evaluation: float
-    # number_project: int
-    # average_montly_hours: float
-    # time_spend_company: float
-    # Work_accident: int
-    # promotion_last_5years: int
-    # department: int
-    # salary_level: int
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "firstname": "Sachin",
+                    "lastname": "Lakshan",
+                    "department": 3,
+                    "salary_level": 0,
+                    "no_of_projects": 3,
+                    "avg_monthly_hours": 240,
+                    "time_spend_company": 3,
+                    "promotions": 0,
+                    "work_accidents": 0,
+                    "job_satisfaction": 60,
+                    "last_evaluation": 52
+                }
+            ]
+        }
+    }
