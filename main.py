@@ -51,8 +51,8 @@ def get_feature_importance(shap_values):
     feature_names = shap_values.feature_names
     pred_shap_df = pd.DataFrame(shap_values.values, columns=feature_names)
     vals = np.abs(pred_shap_df.values).mean(0)
-    shap_importance = pd.DataFrame(list(zip(feature_names, vals)), columns=['col_name', 'feature_importance_vals'])
-    shap_importance.sort_values(by=['feature_importance_vals'], ascending=False, inplace=True)
+    shap_importance = pd.DataFrame(list(zip(feature_names, vals)), columns=['feature_name', 'feature_importance_val'])
+    shap_importance.sort_values(by=['feature_importance_val'], ascending=False, inplace=True)
     shap_importance_dict = shap_importance.to_dict(orient='records')
     return shap_importance_dict
 
