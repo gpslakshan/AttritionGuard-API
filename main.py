@@ -43,7 +43,7 @@ def predict_attrition(employee: Employee):
 
     return {
         "employee_details": employee,
-        "attrition_probability": f"{np.round(prediction_result.item(), 2)}",
+        "attrition_probability": np.round(prediction_result.item(), 2),
         "attrition_result": "Yes" if prediction_result > 0.5 else "No"
     }
 
