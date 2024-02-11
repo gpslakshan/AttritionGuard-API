@@ -5,12 +5,26 @@ from preprocessor import load_data, rename_columns, encode_features, create_trai
 from interpreter import explain_prediction
 from predictor import load_model, make_prediction
 from employee import Employee
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="AttritionGuard-API",
     description="AttritionGuard-API is a powerful tool designed to help organizations proactively manage employee "
                 "attrition. With two intuitive endpoints, this API enables users to predict attrition and gain "
                 "valuable insights into the contributing factors.",
+)
+
+origins = [
+    "http://localhost",
+    "http://localhost:4200",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
