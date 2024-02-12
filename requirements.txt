@@ -8,3 +8,6 @@ numpy
 scikit-learn
 imblearn
 pyarrow
+cloudinary
+python-dotenv
+matplotlib

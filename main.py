@@ -6,6 +6,7 @@ from interpreter import explain_prediction
 from predictor import load_model, make_prediction
 from employee import Employee
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
 
 app = FastAPI(
     title="AttritionGuard-API",
@@ -26,6 +27,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Load .env file
+load_dotenv()
 
 
 @app.post("/predict-attrition", tags=["Prediction"])
@@ -55,20 +59,8 @@ def interpret_factors(employee: Employee):
     input_data = prepare_input_data(employee)
     input_data_df = pd.DataFrame.from_dict(input_data)
     input_data_scaled_df = scaler.transform(input_data_df)
-    shap_values = explain_prediction(model, X_train, input_data_scaled_df)
-    shap_importance_dict = get_feature_importance(shap_values)
-    print(shap_importance_dict)
-    return {"feature_importance": shap_importance_dict}
-
-
-def get_feature_importance(shap_values):
-    feature_names = shap_values.feature_names
-    pred_shap_df = pd.DataFrame(shap_values.values, columns=feature_names)
-    vals = np.abs(pred_shap_df.values).mean(0)
-    shap_importance = pd.DataFrame(list(zip(feature_names, vals)), columns=['feature_name', 'feature_importance_val'])
-    shap_importance.sort_values(by=['feature_importance_val'], ascending=False, inplace=True)
-    shap_importance_dict = shap_importance.to_dict(orient='records')
-    return shap_importance_dict
+    interpret_factors_plot_url = explain_prediction(model, X_train, input_data_scaled_df)
+    return {"interpret_factors_plot_url": interpret_factors_plot_url}
 
 
 def prepare_input_data(employee):
