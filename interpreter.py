@@ -17,6 +17,7 @@ def explain_prediction(model, X_train, input_data_scaled_df):
     pred_shap_values = explainer(input_data_scaled_df)
     shap.plots.bar(pred_shap_values[0], show=False)
     plt.savefig("shap_summary.png", dpi=700, bbox_inches='tight')
+    plt.close()  # Close the current figure
 
     # Uploading the SHAP bar plot to Cloudinary
     cloudinary.config(
