@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from fastapi import FastAPI
-from preprocessor import load_data, rename_columns, encode_features, create_train_test_split, scale_features
+from preprocessor import preprocess, prepare_input_data
 from interpreter import explain_prediction
 from predictor import load_model, make_prediction
 from employee import Employee
@@ -61,32 +61,3 @@ def interpret_factors(employee: Employee):
     input_data_scaled_df = scaler.transform(input_data_df)
     interpret_factors_plot_url = explain_prediction(model, X_train, input_data_scaled_df)
     return {"interpret_factors_plot_url": interpret_factors_plot_url}
-
-
-def prepare_input_data(employee):
-    input_data = {
-        "satisfaction_level": [round(employee.job_satisfaction / 100, 2)],
-        "last_evaluation": [round(employee.last_evaluation / 100, 2)],
-        "number_project": [employee.no_of_projects],
-        "average_montly_hours": [employee.avg_monthly_hours],
-        "time_spend_company": [employee.time_spend_company],
-        "Work_accident": [employee.work_accidents],
-        "promotion_last_5years": [employee.promotions],
-        "department": [employee.department],
-        "salary_level": [employee.salary_level]
-    }
-    return input_data
-
-
-def preprocess():
-    # Dataset Loading and Preprocessing
-    df = load_data("HR_comma_sep.csv")
-    df = rename_columns(df)
-    df = encode_features(df)
-    # Creating dependent variable and independent variables
-    X = df.drop("left", axis=1)
-    y = df["left"]
-    # Train-Test Split and Feature Scaling
-    X_train, X_test, y_train, y_test = create_train_test_split(X, y)
-    X_train, X_test, scaler = scale_features(X_train, X_test)
-    return scaler, X_train, X_test, y_train, y_test
