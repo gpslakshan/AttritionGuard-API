@@ -1,16 +1,19 @@
 import os
 
 import cloudinary
-import cloudinary.uploader
 import cloudinary.api
+import cloudinary.uploader
 import matplotlib
-import shap
 import matplotlib.pyplot as plt
+import shap
+
+from predictor import load_model
 
 matplotlib.use('Agg')
 
 
-def explain_prediction(model, X_train, input_data_scaled_df):
+def explain_prediction(X_train, input_data_scaled_df):
+    model = load_model("BestModel.h5")
     f = lambda x: model.predict(x)
     med = X_train.median().values.reshape((1, X_train.shape[1]))
     explainer = shap.Explainer(f, med)

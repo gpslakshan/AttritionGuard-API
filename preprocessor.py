@@ -55,14 +55,21 @@ def prepare_input_data(employee):
 
 
 def preprocess():
-    # Dataset Loading and Preprocessing
+    # Dataset Loading and cleaning
     df = load_data("HR_comma_sep.csv")
     df = rename_columns(df)
+
+    # Encoding categorical features
     df = encode_features(df)
+
     # Creating dependent variable and independent variables
     X = df.drop("left", axis=1)
     y = df["left"]
-    # Train-Test Split and Feature Scaling
+
+    # Train-Test Split
     X_train, X_test, y_train, y_test = create_train_test_split(X, y)
+
+    # Feature Scaling
     X_train, X_test, scaler = scale_features(X_train, X_test)
+
     return scaler, X_train, X_test, y_train, y_test

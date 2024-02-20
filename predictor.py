@@ -1,5 +1,4 @@
 import tensorflow as tf
-import pandas as pd
 
 
 def load_model(model_path):
@@ -12,8 +11,7 @@ def evaluate_model(model, X_test, y_test):
     print(model.evaluate(X_test, y_test))
 
 
-def make_prediction(model, input_data, scaler):
-    input_data = pd.DataFrame.from_dict(input_data)
-    input_data_scaled = scaler.transform(input_data)
-    return model.predict(input_data_scaled)
+def make_prediction(input_data):
+    model = load_model("BestModel.h5")
+    return model.predict(input_data)
 
